@@ -1,0 +1,19 @@
+[color]
+    ui = auto
+[alias]
+    aliass     = !git config --get-regexp alias
+    me         = !git config --get-regexp user
+    l          = log --decorate --oneline
+    ls         = log --decorate --oneline --stat
+    lg         = log --decorate --oneline --graph
+    nerge      = merge --no-ff
+    purr       = pull --rebase
+    cancel     = reset --soft HEAD^
+    skip       = update-index --skip-worktree
+    noskip     = update-index --no-skip-worktree
+    files      = !cd ${GIT_PREFIX:-.} && git ls-tree -z --name-only HEAD | xargs -0 -n1 -I@ -- git log -1 --pretty=format:'%C(green)%ai%Creset %C(yellow)%h%Creset @ %C(blue)(%ar)%Creset %C(red)<%an>%Creset' -- @
+    wdiff      = diff --word-diff --ignore-all-space
+    f          = fetch --prune
+    gga = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+[fetch]
+    prune = true
