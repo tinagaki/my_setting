@@ -56,7 +56,7 @@ colorscheme molokai
 set t_Co=256
 "ctags用設定
 " 拡張子で読み込みタグ変更
-au BufNewFile,BufRead *.pm set tags+=$HOME/.tags/adstir_perl.tags
+au BufNewFile,BufRead *.pm set tags+=$HOME/.tags/tags
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
 "ctags用設定 END
