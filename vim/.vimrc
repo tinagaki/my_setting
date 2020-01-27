@@ -76,7 +76,7 @@ set virtualedit=block
 set wildmenu
 " ファイルタイプの自動検出
 set filetype=on
-
+set backspace=indent,eol,start
 "検索時のハイライト
 set hlsearch
 "" ステータスラインを常に表示（編集中のファイル名が常に確認できるようになる）
