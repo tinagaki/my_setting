@@ -1,5 +1,3 @@
-# Ctrl+Dでログアウトしてしまうことを防ぐ
-setopt IGNOREEOF
 
 # 日本語を使用
 export LANG=ja_JP.UTF-8
@@ -7,13 +5,6 @@ export LANG=ja_JP.UTF-8
 # パスを追加したい場合
 export PATH="$HOME/bin:$PATH"
 
-# 色を使用
-autoload -Uz colors
-colors
-
-# 補完
-autoload -Uz compinit
-compinit
 
 
 # 他のターミナルとヒストリーを共有
@@ -51,6 +42,8 @@ alias lst='ls -ltr --color=auto'
 alias l='ls -ltr --color=auto'
 alias la='ls -la --color=auto'
 alias ll='ls -l --color=auto'
+
+
 alias so='source'
 alias v='vim'
 alias vi='vim'
@@ -65,9 +58,30 @@ alias ..='c ../'
 alias back='pushd'
 alias diff='diff -U1'
 
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
-# cdの後にlsを実行
-chpwd() { ls -ltr --color=auto }
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Customize to your needs...
+alias ack='ag'
+alias ls='exa -F'
+alias cat='bat -p '
+alias ps='procs'
+
+alias mv='mv -i'
+alias rm='rm -i'
+#alias cp='cp -i'
+alias sc='screen'
+alias bash='/usr/local/bin/bash'
+alias grep='grep --color=always '
 
 # どこからでも参照できるディレクトリパス
 cdpath=(~)
