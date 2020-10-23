@@ -1,122 +1,124 @@
-""---------- NeoBundle Start --------------
+
+"構文ハイライト
+syntax on
+"アンダーライン設定
+set cursorline
+"マウス操作有効
+"set mouse=a
+"行番号表示
+set number
+"tab幅の指定
+set tabstop=4
+set shiftwidth=4
+set expandtab
+"検索時などに大文字小文字無視
+set ignorecase
+"検索時などに大文字ではじめたら大文字小文字無視しない
+set smartcase
+"検索文字をハイライト
+set hlsearch
+" screenを256色とする
+set t_Co=256
+" カラースキーマにhybridを設定
+colorscheme hybrid
+"colorscheme molokai
+
+"--------------------------------------------------------------------------
+" neobundle
+
+
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
-
-filetype off
 
 if has('vim_starting')
   if &compatible
     set nocompatible               " Be iMproved
   endif
 
-  set runtimepath+=~/.vim/bundle/neobundle.vim
+  " Required:
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
+" Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-" originalrepos on github
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+" Note: You don't set neobundle setting in .gvimrc!
+ 
 NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-    \ 'windows' : 'make -f make_mingw32.mak',
-    \ 'cygwin' : 'make -f make_cygwin.mak',
-    \ 'mac' : 'make -f make_mac.mak',
-    \ 'unix' : 'make -f make_unix.mak',
-  \ },
-  \ }
-"NeoBundle 'VimClojure'
-"NeoBundle 'Shougo/vimshell'
-NeoBundle 'Shougo/unite.vim'
-"NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/neocomplete'
-"NeoBundle 'Shougo/neosnippet'
-"NeoBundle 'jpalardy/vim-slime'
-"NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'scrooloose/syntastic'
-"NeoBundle 't9md/vim-textmanip'
-"NeoBundle 'Shougo/unite.vim'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'vim-scripts/savevers.vim'
-""NeoBundle 'https://bitbucket.org/kovisoft/slimv'
-"ttファイル用プラグイン
-NeoBundle "petdance/vim-perl"
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'szw/vim-tags'
+:set statusline+=%{fugitive#statusline()} 
+" NeoBundle 'itchyny/lightline.vim'
+" NeoBundle 'taketwo/vim-ros'
+
 
 call neobundle#end()
 
-filetype plugin indent on     " required!
-filetype indent on
-syntax on
+" Required:
+filetype plugin indent on
 
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
 NeoBundleCheck
-"" ----------------NeoBundle End-------------------
-""---------------------通常設定----------------------------------
-colorscheme molokai
-set t_Co=256
-"ctags用設定
+" neobundle
+"--------------------------------------------------------------------------
+" spaceをctrlの代わりに変更
+let mapleader = "\<Space>"
+" <Space>pと<Space>yでシステムのクリップボードにコピー＆ペーストする
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+"<Space><Space>でビジュアルラインモードに切り替える
+nmap <Leader><Leader> V
+
+"貼り付けたテキストの末尾へ自動的に移動する
+"pppppと押すだけで、複数行の貼り付けを繰り返し実行できます。
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
+    
+        
+
+"----indent guide ---
+" vim-indent-guides
+" Vim 起動時 vim-indent-guides を自動起動
+let g:indent_guides_enable_on_vim_startup=1
+" ガイドをスタートするインデントの量
+let g:indent_guides_start_level=2
+" 自動カラー無効
+let g:indent_guides_auto_colors=0
+" 奇数番目のインデントの色
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#111133 ctermbg=darkred
+" 偶数番目のインデントの色
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#222244 ctermbg=darkgray
+" ガイドの幅
+let g:indent_guides_guide_size = 1
+" vim-indent-guides
+"----indent guide ---
+" vimにcoffeeファイルタイプを認識させる
+
+au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
+" インデント設定
+autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
+" ctags 用設定
+set fileformats=unix,dos,mac
+set fileencodings=utf-8,sjis
 " 拡張子で読み込みタグ変更
-au BufNewFile,BufRead *.pm set tags+=$HOME/.tags/tags
+au BufNewFile,BufRead *.php set tags+=$HOME/php.tags
+au BufNewFile,BufRead *.inc set tags+=$HOME/php.tags
+au BufNewFile,BufRead *.php let g:vim_tags_project_tags_command = "ctags --languages=php -f ~/php.tags `pwd` 2>/dev/null &"
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
-"ctags用設定 END
-syntax on
-set number
-set title
-set ambiwidth=double
-set tabstop=4
-set expandtab
-set shiftwidth=4
-set smartindent
-set nolist
-""set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
-set nrformats-=octal
-set history=50
-set virtualedit=block
-set wildmenu
-" ファイルタイプの自動検出
-set filetype=on
-set backspace=indent,eol,start
-"検索時のハイライト
-set hlsearch
-"" ステータスラインを常に表示（編集中のファイル名が常に確認できるようになる）
-set laststatus=2
-"前回編集した箇所に移動する
-augroup vimrcEx
-  au BufRead * if line("'\"") > 0 && line("'\"") <= line("$") |
-  \ exe "normal g`\"" | endif
-augroup END
-"--------savevers.vim--------------
-set backup
-set patchmode=.clean
-set backupdir=~/.vim/backup
-let savevers_types = "*"
-let versdiff_no_resize=1
-let savevers_dirs = &backupdir
-"
-nmap <silent> <F5> :VersDiff -<cr>
-nmap <silent> <F6> :VersDiff +<cr>
-nmap <silent> <F8> :VersDiff -c<cr>
-"--------savevers.vim END--------------
-"--------vim perl START END--------------
-"au BufNewFile,BufRead *.tt2 call s:AdjustTT2Type()
-"au BufNewFile,BufRead *.tt setf tt2html
-"autocmd BufNewFile,BufRead *.tt setf tt2
-"func! s:AdjustTT2Type()
-"    if ( getline(1) . getline(2) . getline(3) =~ '<\chtml'
-"              && getline(1) . getline(2) . getline(3) !~ '<[%?]' )
-"       || getline(1) =~ '<!DOCTYPE HTML'
-"        setf tt2html
-"    else
-"        setf tt2
-"    endif
-"endfunc
-
-"To define START_TAG and END_TAG you like, you can set any pair of tags to 'b:tt2_syn_tags':
-"ASP"
-":let b:tt2_syn_tags = '<% %>'
-"PHP"
-":let b:tt2_syn_tags = '<? ?>'
-"TT2 and HTML"
-":let b:tt2_syn_tags = '\[% %] <!-- -->'
-"--------vim perl END--------------
